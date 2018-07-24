@@ -255,6 +255,8 @@ $ docker tag registry.cn-hangzhou.aliyuncs.com/k8sth/pause-amd64:3.1 k8s.gcr.io/
 $ ntpdate ntp1.aliyun.com
 ```
 
+![](https://images2018.cnblogs.com/blog/39469/201807/39469-20180710163655709-89635310.png)
+
 ## 参考资料
 1. [centos7.3 kubernetes/k8s 1.10 离线安装](https://www.jianshu.com/p/9c7e1c957752)
 2. [Kubeadm安装Kubernetes环境](https://www.cnblogs.com/ericnie/p/7749588.html)
