@@ -191,6 +191,8 @@ provisioner: kubernetes.io/no-provisioner
 volumeBindingMode: WaitForFirstConsumer
 ```
 
+![](https://images2018.cnblogs.com/blog/39469/201807/39469-20180710163655709-89635310.png)
+
 ## 参考资料：
 1. [Kubernetes Storage](https://kubernetes.io/docs/concepts/storage/volumes)
 2. [Configure a Pod to Use a PersistentVolume for Storage](https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/)
