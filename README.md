@@ -56,7 +56,7 @@ EOF
 
 ### 0.6 安装一些必备的工具
 ```sh
-$ yum -y epel-release 
+$ yum install -y epel-release 
 $ yum install -y net-tools wget vim  ntpdate
 ```
 
