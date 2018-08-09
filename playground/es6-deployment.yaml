@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment 
+metadata:
+  name: es-cluster
+  namespace: default
+  labels:
+    app: es-cluster 
+spec:
+  selector:
+    matchLabels:
+      app: es
+      tier: backend
+      version: 6.3.2
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: es
+        tier: backend
+        version: 6.3.2
+    spec:
+      containers:
+      - name: elasticsearch 
+        image: docker.elastic.co/elasticsearch/elasticsearch:6.3.2
+        volumeMounts:
+        - name: es-storage
+          mountPath: /data/es
+        env:
+        - name: ES_JAVA_OPTS
+          value: "-Xms128m -Xmx128m"
+        ports:
+        - containerPort: 9200
+          protocol: TCP
+        - containerPort: 9300
+          protocol: TCP
+      volumes:
+      - name: es-storage
+        hostPath:
+          path: /home/es

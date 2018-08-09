@@ -1,0 +1,47 @@
+kind: List
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: es-storage-pv-01
+  spec:
+    capacity:
+      storage: 100Mi
+    volumeMode: Filesystem
+    accessModes: ["ReadWriteOnce"]
+    persistentVolumeReclaimPolicy: Delete
+    storageClassName: local-storage
+    local:
+      path: /home/es
+    nodeAffinity:
+      required:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/hostname
+            operator: In
+            values:
+            - devops-102
+            - devops-103
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: es-storage-pv-02
+  spec:
+    capacity:
+      storage: 100Mi
+    volumeMode: Filesystem
+    accessModes: ["ReadWriteOnce"]
+    persistentVolumeReclaimPolicy: Delete
+    storageClassName: local-storage
+    local:
+      path: /home/es01
+    nodeAffinity:
+      required:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/hostname
+            operator: In
+            values:
+            - devops-102
+            - devops-103

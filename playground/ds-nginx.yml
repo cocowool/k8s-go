@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: es-logstash
+  labels:
+    app: logstash
+spec:
+  selector:
+    matchLabels:
+      name: es-logstash
+  template:
+    metadata:
+      labels:
+        name: es-logstash
+    spec:
+      tolerations:
+      - key: node-role.kubernetes.io/master
+        effect: NoSchedule
+      containers:
+      - name: es-logstash
+        image: docker.elastic.co/elasticsearch/logstash

@@ -1,0 +1,19 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: myservice
+spec:
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 9376
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: mydb
+spec:
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 9377

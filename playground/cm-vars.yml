@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cm-vars
+data:
+  apploglevel: info
+  appdatadir: /var/data

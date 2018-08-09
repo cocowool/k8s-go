@@ -9,3 +9,15 @@ for imageName in ${images[@]} ; do
 done
 # 个人新加的一句，V 1.11.0 必加
 docker tag da86e6ba6ca1 k8s.gcr.io/pause:3.1
+
+docker pull docker.io/mirrorgooglecontainers/k8s-dns-sidecar-amd64:1.14.9
+docker tag docker.io/mirrorgooglecontainers/k8s-dns-sidecar-amd64:1.14.9 k8s.gcr.io/k8s-dns-sidecar-amd64:1.14.9
+docker rmi docker.io/mirrorgooglecontainers/k8s-dns-sidecar-amd64:1.14.9
+docker tag docker.io/mirrorgooglecontainers/k8s-dns-kube-dns-amd64:1.14.9 k8s.gcr.io/k8s-dns-kube-dns-amd64:1.14.9
+docker rmi docker.io/mirrorgooglecontainers/k8s-dns-kube-dns-amd64:1.14.9 
+docker pull docker.io/mirrorgooglecontainers/k8s-dns-dnsmasq-nanny-amd64:1.14.9
+docker tag docker.io/mirrorgooglecontainers/k8s-dns-dnsmasq-nanny-amd64:1.14.9 k8s.gcr.io/k8s-dns-dnsmasq-nanny-amd64:1.14.9
+docker rmi docker.io/mirrorgooglecontainers/k8s-dns-dnsmasq-nanny-amd64:1.14.9
+
+docker pull registry.cn-shenzhen.aliyuncs.com/cp_m/flannel:v0.10.0-amd64
+docker tag registry.cn-shenzhen.aliyuncs.com/cp_m/flannel:v0.10.0-amd64 quay.io/coreos/flannel:v0.10.0-amd64
