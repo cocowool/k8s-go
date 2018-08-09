@@ -30,7 +30,7 @@ repo_gpgcheck=1
 gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
 EOF
 
-yum -y epel-release 
+yum install -y epel-release 
 yum install -y net-tools wget vim  ntpdate
 yum install -y docker
 systemctl enable docker && systemctl start docker
