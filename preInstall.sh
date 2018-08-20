@@ -37,3 +37,4 @@ systemctl enable docker && systemctl start docker
 systemctl enable docker.service
 yum install -y kubelet kubeadm kubectl kubernetes-cni
 systemctl enable kubelet && systemctl start kubelet
+systemctl enable kubelet.service

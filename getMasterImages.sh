@@ -22,3 +22,4 @@ docker rmi docker.io/mirrorgooglecontainers/k8s-dns-dnsmasq-nanny-amd64:1.14.9
 
 docker pull registry.cn-shenzhen.aliyuncs.com/cp_m/flannel:v0.10.0-amd64
 docker tag registry.cn-shenzhen.aliyuncs.com/cp_m/flannel:v0.10.0-amd64 quay.io/coreos/flannel:v0.10.0-amd64
+docker rmi registry.cn-shenzhen.aliyuncs.com/cp_m/flannel:v0.10.0-amd64
