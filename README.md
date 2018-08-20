@@ -1,4 +1,4 @@
-# k8s-go
+# kubeadm安装kubernetes V1.11.1 集群
 
 > 之前测试了[离线环境下使用二进制方法安装配置Kubernetes集群](https://www.cnblogs.com/cocowool/p/install_k8s_offline.html)的方法，安装的过程中听说 kubeadm 安装配置集群更加方便，因此试着折腾了一下。安装过程中，也有一些坑，相对来说操作上要比二进制方便一点，毕竟不用手工创建那么多的配置文件，但是对于了解Kubernetes的运作方式，可能不如二进制方式好。同时，因为kubeadm方式，很多集群依赖的组件都是以容器方式运行在Master节点上，感觉对于虚拟机资源的消耗要比二进制方式厉害。
 
@@ -187,7 +187,7 @@ kube-system   kube-scheduler-devops-101            1/1       Running   0        
 这里我选用了 Flannel 的方案。
 > kubeadm only supports Container Network Interface (CNI) based networks (and does not support kubenet).
 
-修改系统设置。
+修改系统设置，创建 flannel 网络。
 ```sh
 [root@devops-101 ~]# sysctl net.bridge.bridge-nf-call-iptables=1
 net.bridge.bridge-nf-call-iptables = 1
@@ -198,7 +198,20 @@ serviceaccount/flannel created
 configmap/kube-flannel-cfg created
 daemonset.extensions/kube-flannel-ds created
 ```
+flannel 默认会使用主机的第一张网卡，如果你有多张网卡，需要通过配置单独指定。修改 kube-flannel.yml 中的以下部分
+```yaml
+containers:
+      - name: kube-flannel
+        image: quay.io/coreos/flannel:v0.10.0-amd64
+        command:
+        - /opt/bin/flanneld
+        args:
+        - --ip-masq
+        - --kube-subnet-mgr
+        - --iface=enp0s3            #指定内网网卡
+```
 执行成功后，Master并不能马上变成Ready状态，稍等几分钟，就可以看到所有状态都正常了。
+
 ```sh
 [root@devops-101 ~]# kubectl get pods --all-namespaces
 NAMESPACE     NAME                                 READY     STATUS    RESTARTS   AGE
@@ -237,6 +250,8 @@ devops-102   Ready     <none>    11m       v1.11.1
 
 我把安装中需要用到的一些命令整理成了几个脚本，放在我的[Github](https://github.com/cocowool/k8s-go)上，大家可以下载使用。
 
+![](https://images2018.cnblogs.com/blog/39469/201807/39469-20180710163655709-89635310.png)
+
 ## X. 坑
 
 ### pause:3.1
@@ -255,8 +270,6 @@ $ docker tag registry.cn-hangzhou.aliyuncs.com/k8sth/pause-amd64:3.1 k8s.gcr.io/
 $ ntpdate ntp1.aliyun.com
 ```
 
-![](https://images2018.cnblogs.com/blog/39469/201807/39469-20180710163655709-89635310.png)
-
 ## 参考资料
 1. [centos7.3 kubernetes/k8s 1.10 离线安装](https://www.jianshu.com/p/9c7e1c957752)
 2. [Kubeadm安装Kubernetes环境](https://www.cnblogs.com/ericnie/p/7749588.html)
@@ -267,3 +280,5 @@ $ ntpdate ntp1.aliyun.com
 7. [kubeadm搭建kubernetes1.7.5集群](https://blog.csdn.net/zhongyuemengxiang/article/details/79121932)
 8. [安装部署 Kubernetes 集群](https://www.cnblogs.com/Leo_wl/p/8511902.html)
 9. [linux 命令 ---- 同步当前服务器时间](https://www.cnblogs.com/chenzeyong/p/5951959.html)
+10. [CentOS 7.4 安装 K8S v1.11.0 集群所遇到的问题](https://www.cnblogs.com/myzony/p/9298783.html#1.准备工作)
+11. [使用kubeadm部署kubernetes](https://blog.csdn.net/andriy_dangli/article/details/79269348)
