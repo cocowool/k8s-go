@@ -1,3 +1,8 @@
+# 目录
+
+这里整理了我学习Kubernetes的资料，供大家参考交流
+- [Kubernetes的命名空间]()
+
 # kubeadm安装kubernetes V1.11.1 集群
 
 > 之前测试了[离线环境下使用二进制方法安装配置Kubernetes集群](https://www.cnblogs.com/cocowool/p/install_k8s_offline.html)的方法，安装的过程中听说 kubeadm 安装配置集群更加方便，因此试着折腾了一下。安装过程中，也有一些坑，相对来说操作上要比二进制方便一点，毕竟不用手工创建那么多的配置文件，但是对于了解Kubernetes的运作方式，可能不如二进制方式好。同时，因为kubeadm方式，很多集群依赖的组件都是以容器方式运行在Master节点上，感觉对于虚拟机资源的消耗要比二进制方式厉害。
