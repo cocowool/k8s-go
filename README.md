@@ -1,9 +1,12 @@
 # 目录
 
 这里整理了我学习Kubernetes的资料，供大家参考交流
-- [Kubernetes的命名空间](https://github.com/cocowool/k8s-go/blob/master/learnrecord/namespace.MD)
-- [Kubernetes Pod详细介绍](https://github.com/cocowool/k8s-go/tree/master/pod)
-- [Kubernetes 存储系统介绍](https://github.com/cocowool/k8s-go/tree/master/storage)
+- 安装
+	- [离线环境二进制方式安装Kubernetes集群](https://github.com/cocowool/k8s-go/blob/master/install/offline-binary.md)) 
+- 概念
+	- [Kubernetes的命名空间](https://github.com/cocowool/k8s-go/blob/master/learnrecord/namespace.MD)
+	- [Kubernetes Pod详细介绍](https://github.com/cocowool/k8s-go/tree/master/pod)
+	- [Kubernetes 存储系统介绍](https://github.com/cocowool/k8s-go/tree/master/storage)
 
 # kubeadm安装kubernetes V1.11.1 集群
 
