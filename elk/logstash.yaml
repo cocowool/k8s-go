@@ -1,0 +1,39 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: k8s-logstash
+  namespace: default
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: logstash
+        role: k8s
+    spec:
+      containers:
+      - image: docker.elastic.co/logstash/logstash:6.4.0
+        name: logstash
+        resources:
+          requests:
+            cpu: 100m
+            memory: 200M
+        volumeMounts:
+        - name: container-logs
+          mountPath: /log
+        env: 
+        - name: LogFile
+          value: '["/log/*"]'
+        - name: ES_SERVER
+          value: es-single:9200
+        - name: XPACK_MONITORING_ELASTICSEARCH_URL
+          value: http://es-single:9200
+        - name: INDICES
+          value: k8s-log
+        - name: CODEC
+          value: plain 
+      volumes:
+      - name: container-logs
+        hostPath:
+          path: /var/log/containers
+          type: Directory
