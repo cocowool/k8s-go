@@ -1,0 +1,182 @@
+kind: List
+apiVersion: v1
+items:
+- apiVersion: apps/v1beta1
+  kind: Deployment
+  metadata:
+    name: kb-single
+    labels:
+      author: shiqiang
+  spec:
+    replicas: 1
+    template:
+      metadata:
+        name: kb-single
+        labels:
+          app: kb-single
+          author: shiqiang
+      spec:
+        containers:
+        - image: docker.elastic.co/kibana/kibana:6.4.0
+          name: kb
+          env:
+          - name: ELASTICSEARCH_URL
+            value: "http://es-cluster:9200"
+          ports:
+          - name: http
+            containerPort: 5601
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: kb-single-svc
+    labels:
+      author: shiqiang
+  spec:
+    type: NodePort
+    ports:
+    - name: http
+      port: 5601
+      targetPort: 5601 
+      nodePort: 32601
+    selector:
+      app: kb-single            
+- apiVersion: apps/v1beta1
+  kind: StatefulSet
+  metadata:
+    name: es-cluster
+  spec:
+    serviceName: es-cluster
+    replicas: 3
+    selector:
+      matchLabels:
+        app: es-cluster
+    template:
+      metadata:
+        name: es-cluster
+        labels:
+          app: es-cluster
+          author: shiqiang
+          role: master
+      spec:
+        containers:
+        - image: docker.elastic.co/elasticsearch/elasticsearch:6.4.0
+          name: es
+          resources:
+            limits:
+              cpu: 300m
+              memory: 512Mi
+            requests:
+              cpu: 200m
+              memory: 256Mi
+          env:
+          - name: network.host
+            value: "_site_"
+          - name: node.name
+            value: "${HOSTNAME}"
+          - name: discovery.zen.ping.unicast.hosts
+            value: "es-cluster"
+          - name: discovery.zen.minimum_master_nodes
+            value: "2"
+          - name: cluster.name
+            value: "test-cluster"
+          - name: node.master
+            value: "true"
+          - name: node.data
+            value: "false"
+          - name: node.ingest
+            value: "false"
+          - name: ES_JAVA_OPTS
+            value: "-Xms128m -Xmx128m"
+          volumeMounts:
+          - name: es-cluster-storage
+            mountPath: /usr/share/elasticsearch/data
+        volumes:
+          - name: es-cluster-storage
+            emptyDir: {}
+- apiVersion: apps/v1beta1
+  kind: StatefulSet
+  metadata:
+    name: es-cluster-data
+  spec:
+    serviceName: es-cluster-data
+    replicas: 3
+    selector:
+      matchLabels:
+        app: es-cluster-data
+    template:
+      metadata:
+        name: es-cluster-data
+        labels:
+          app: es-cluster-data
+          author: shiqiang
+          role: master
+      spec:
+        containers:
+        - image: docker.elastic.co/elasticsearch/elasticsearch:6.4.0
+          name: es-data
+          resources:
+            limits:
+              cpu: 300m
+              memory: 512Mi
+            requests:
+              cpu: 200m
+              memory: 256Mi
+          env:
+          - name: network.host
+            value: "_site_"
+          - name: node.name
+            value: "${HOSTNAME}"
+          - name: discovery.zen.ping.unicast.hosts
+            value: "es-cluster"
+          - name: discovery.zen.minimum_master_nodes
+            value: "2"
+          - name: cluster.name
+            value: "test-cluster"
+          - name: node.master
+            value: "false"
+          - name: node.data
+            value: "true"
+          - name: node.ingest
+            value: "false"
+          - name: ES_JAVA_OPTS
+            value: "-Xms128m -Xmx128m"
+          volumeMounts:
+          - name: es-cluster-storage
+            mountPath: /usr/share/elasticsearch/data
+        volumes:
+          - name: es-cluster-storage
+            emptyDir: {}
+- apiVersion: v1
+  kind: Service
+  metadata: 
+    name: es-cluster-nodeport
+    labels:
+      author: shiqiang
+  spec:
+    type: NodePort
+    ports:
+    - name: http
+      port: 9200
+      targetPort: 9200
+      nodePort: 31200
+    - name: tcp
+      port: 9300
+      targetPort: 9300
+      nodePort: 31300
+    selector:
+      app: es-cluster
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: es-cluster
+    labels:
+      author: shiqiang
+  spec:
+    clusterIP: None
+    ports:
+    - name: http
+      port: 9200
+    - name: tcp
+      port: 9300
+    selector:
+      app: es-cluster
