@@ -4,6 +4,7 @@
 - 安装
 	- [离线环境二进制方式安装Kubernetes集群](https://github.com/cocowool/k8s-go/blob/master/install/offline-binary.md)) 
 - 概念
+	- [Kubernetes的Controllers](https://github.com/cocowool/k8s-go/blob/master/controller/README.md)
 	- [Kubernetes的命名空间](https://github.com/cocowool/k8s-go/blob/master/learnrecord/namespace.MD)
 	- [Kubernetes Pod详细介绍](https://github.com/cocowool/k8s-go/tree/master/pod)
 	- [Kubernetes 存储系统介绍](https://github.com/cocowool/k8s-go/tree/master/storage)
