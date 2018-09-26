@@ -1,0 +1,14 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pi
+spec:
+  backoffLimit: 4
+  activeDeadlineSeconds: 100
+  template:
+    spec:
+      containers:
+      - name: pi
+        image: docker.io/perl
+        command: ["perl", "-Mbignum=bpi", "-wle", "print bpid(2000)"]
+      restartPolicy: Never
