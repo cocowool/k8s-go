@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-with-pvc
+spec:
+  containers:
+  - image: docker.io/nginx
+    name: alpine
+    volumeMounts:
+    - name: localstorage
+      mountPath: /data/db
+  volumes:
+  - name: localstorage
+    persistentVolumeClaim:
+      claimName: pvc-localstorage
