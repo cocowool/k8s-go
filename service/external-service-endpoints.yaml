@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: external-service
+subsets:
+  - addresses:
+    - ip: 220.181.57.216
+    - ip: 123.58.180.7
+    ports:
+    - port: 80
