@@ -1,0 +1,18 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: tomcat
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: tomcat
+      labels:
+        app: tomcat
+    spec:
+      containers:
+      - image: docker.io/tomcat
+        name: tomcat
+        ports:
+        - name: http
+          containerPort: 8080

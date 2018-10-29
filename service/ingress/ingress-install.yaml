@@ -132,6 +132,7 @@ items:
           args:
             - -nginx-configmaps=$(POD_NAMESPACE)/nginx-config
             - -default-server-tls-secret=$(POD_NAMESPACE)/default-server-secret
+            - -report-ingress-status
 - apiVersion: v1
   kind: Service
   metadata:

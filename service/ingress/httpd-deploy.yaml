@@ -1,0 +1,19 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: httpd
+#  namespace: nginx-ingress
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: httpd 
+      labels:
+        app: httpd 
+    spec:
+      containers:
+      - image: docker.io/httpd
+        name: httpd 
+        ports:
+        - name: http
+          containerPort: 80
