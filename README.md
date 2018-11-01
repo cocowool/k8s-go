@@ -8,6 +8,7 @@
 	- [Kubernetes的命名空间](https://github.com/cocowool/k8s-go/blob/master/learnrecord/namespace.MD)
 	- [Kubernetes Pod详细介绍](https://github.com/cocowool/k8s-go/tree/master/pod)
 	- [Kubernetes 存储系统介绍](https://github.com/cocowool/k8s-go/tree/master/storage)
+	- [Kubernetes 中的ConfigMap和Secret](https://github.com/cocowool/k8s-go/tree/master/storage/configmap.md)
 - 案例
 	- [Kubernetes部署ELK并且使用Filebeat收集集群容器日志](https://github.com/cocowool/k8s-go/tree/master/elk)
 
